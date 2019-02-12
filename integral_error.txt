@@ -1,0 +1,26 @@
+{ОШИБКИ:
+    1.pas(7,2) Note: Ignored compiler switch "$F"
+    1.pas(75,6) Error: Wrong number of parameters specified for call to "f1"
+    1.pas(8,10) Error: Found declaration: f1(Real):Double;
+    1.pas(75,10) Error: Wrong number of parameters specified for call to "f2"
+    1.pas(13,10) Error: Found declaration: f2(Real):Double;
+    1.pas(76,6) Error: Wrong number of parameters specified for call to "f2"
+    1.pas(13,10) Error: Found declaration: f2(Real):Double;
+    1.pas(76,10) Error: Wrong number of parameters specified for call to "f3"
+    1.pas(18,10) Error: Found declaration: f3(Real):Double;
+    1.pas(77,6) Error: Wrong number of parameters specified for call to "f1"
+    1.pas(8,10) Error: Found declaration: f1(Real):Double;
+    1.pas(77,10) Error: Wrong number of parameters specified for call to "f3"
+    1.pas(18,10) Error: Found declaration: f3(Real):Double;
+    1.pas(80,16) Error: Wrong number of parameters specified for call to "f1"
+    1.pas(8,10) Error: Found declaration: f1(Real):Double;
+    1.pas(81,16) Error: Wrong number of parameters specified for call to "f2"
+    1.pas(13,10) Error: Found declaration: f2(Real):Double;
+    1.pas(82,16) Error: Wrong number of parameters specified for call to "f3"
+    1.pas(18,10) Error: Found declaration: f3(Real):Double;
+    1.pas(91,29) Warning: Variable "x1" does not seem to be initialized
+    1.pas(92,29) Warning: Variable "x3" does not seem to be initialized
+    1.pas(93,29) Warning: Variable "x2" does not seem to be initialized
+    1.pas(98) Fatal: There were 18 errors compiling module, stopping
+    Fatal: Compilation aborted
+}
