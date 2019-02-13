@@ -36,8 +36,8 @@ end;
 
 x := c;
 end;
-
-function integral (f: TF; a, b, eps: real): real;
+{прямоугольник}
+function integral1 (f: TF; a, b, eps: real): real;
 var
 n, k: integer;
 h, I: real;
@@ -51,11 +51,32 @@ for k := 1 to n do begin
 I := I + h*f(a+(k+0.5)*h);
 end;
 
-{writeln(I);}
 
-integral := I;
+integral1 := I;
 
 end;
+
+function integral (f: TF; a, b, eps: real): real;
+var
+n, k, t: integer;
+h, I: real;
+begin
+{для деления метода симпсона}
+
+n := 1000; {зависит от eps2 и четное}
+h := (b-a)/n;
+I := h*(f(a)+f(b))/3;
+
+for k := 1 to n-1 do begin
+writeln(I);
+t:=2;
+if k mod 2 = 1 then t := t+2;
+I := I + h*(t*f(a+k*h))/3;
+end;
+
+writeln(I);
+
+integral := I;
 
 
 {main}
