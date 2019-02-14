@@ -1,6 +1,6 @@
 program Y;
 
-var a, b, eps1, eps2, x1, x2, x3, I1, I2, I3, answer: real;
+var  eps1, eps2, x1, x2, x3, I1, I2, I3, answer: real;
 
 type TF = function (x: real): real;
 
@@ -82,11 +82,6 @@ integral := I;
 {main}
 begin
 
-{примерные границы корней}
-a := -0.25;
-b := 4.0;
-
-
 {погрешность}
 eps1 := 0.000000001;
 eps2 := 0.001;
@@ -106,7 +101,7 @@ I3 := integral(@f3, x3, x2, eps2);
 
 answer := I1 - I2 - I3;
 
-writeln('Площадь =   ', answer);
+writeln('Площадь =   ', abs(answer));
 writeln('Точки пересечения : ');
 writeln('f1 и f2:     ', x1);
 writeln('f1 и f3:     ', x3);
