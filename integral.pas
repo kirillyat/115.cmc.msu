@@ -67,19 +67,22 @@ end;
  
 function integral (f: TF; a, b, eps: real): real;
 var
+r:real;
 n: integer;
 begin
 {для деления метода симпсона}
  
 n := 10;
- 
-while abs(integral1(f, a, b, n)-integral1(f, a, b, 2*n))> eps  do begin
+r:=integral1(f, a, b, n);
+while abs(r-integral1(f, a, b, 2*n))/15 > eps  do begin
+
 n:=2*n;
+r:=integral1(f, a, b, n);
 end;
  
  
  
-integral := integral1(f, a, b, 2*n);
+integral := r;
  
 end;
 {main}
