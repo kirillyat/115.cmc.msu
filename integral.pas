@@ -37,6 +37,12 @@ end;
 x := c;
 end;
 
+function maxi(a, b:real):real;
+begin
+    if a>b then maxi:=a
+    else maxi:=b;
+end;
+
 
 function integral (f: TF; a, b, eps: real): real;
 var
