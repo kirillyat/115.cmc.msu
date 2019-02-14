@@ -83,11 +83,11 @@ I3 := integral(@f3, x3, x2, eps2);
 
 answer := I1 - I2 - I3;
 
-writeln('Площадь =   ', abs(answer));
+writeln('Площадь =   ', abs(answer):4:5);
 writeln('Точки пересечения : ');
-writeln('f1 и f2:     ', x1);
-writeln('f1 и f3:     ', x3);
-writeln('f3 и f2:     ', x2);
+writeln('f1 и f2:     ', x1:4:5);
+writeln('f1 и f3:     ', x3:4:5);
+writeln('f3 и f2:     ', x2:4:5);
 
 
 
