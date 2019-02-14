@@ -28,7 +28,7 @@ c: real;
 begin
 c := (a+b)/2;
 while abs(f(c)-g(c)) >= eps do begin
-writeln(f(c)-g(c));
+
     if (f(a)-g(a))*(f(c)-g(c))<0 then b := c
     else a := c;
     c := (a+b)/2;
@@ -50,13 +50,13 @@ h := (b-a)/n;
 I := h*(f(a)+f(b))/3;
 
 for k := 1 to n-1 do begin
-writeln(I);
+
 t:=2;
 if k mod 2 = 1 then t := t+2;
 I := I + h*(t*f(a+k*h))/3;
 end;
 
-writeln(I);
+
 
 integral := I;
 
