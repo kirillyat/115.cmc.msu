@@ -36,25 +36,7 @@ end;
 
 x := c;
 end;
-{прямоугольник}
-function integral1 (f: TF; a, b, eps: real): real;
-var
-n, k: integer;
-h, I: real;
-begin
-{для деления метода прямоугольников}
-I := 0;
-n := 1000; {зависит от eps2}
-h := (b-a)/n;
 
-for k := 1 to n do begin
-I := I + h*f(a+(k+0.5)*h);
-end;
-
-
-integral1 := I;
-
-end;
 
 function integral (f: TF; a, b, eps: real): real;
 var
