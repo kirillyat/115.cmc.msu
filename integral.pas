@@ -75,9 +75,9 @@ eps1 := 0.000000001;
 eps2 := 0.001;
 
 {нахождение корней}
-root(@f1, @f2, 1.5, 2.5, eps1, x1);
-root(@f2, @f3, 0.0, 1.0, eps1, x2);
-root(@f1, @f3, -1.0, 0.0, eps1, x3);
+root(@f1, @f2, -0.3, 2.5, eps1, x1);
+root(@f2, @f3, -0.3, 2.5, eps1, x2);
+root(@f1, @f3, -0.3, 2.5, eps1, x3);
 
 {площади}
 I1 := integral(@f1, x1+x3-maxi(x1, x3), maxi(x1, x3), eps2);
@@ -87,7 +87,7 @@ I3 := integral(@f3, x3+x2-maxi(x3,x2), maxi(x2, x3), eps2);
 
 {подсчет и вывод результатов}
 
-answer := abs(I1) - abs(I2) - abs(I3);
+answer := 2*maxi(maxi(abs(I1), abs(I2)), abs(I3)) -abs(I1) - abs(I2) - abs(I3);
 
 writeln('Площадь =   ', abs(answer):4:5);
 writeln('Точки пересечения : ');
