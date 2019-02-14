@@ -43,29 +43,44 @@ begin
     else maxi:=b;
 end;
 
-
-function integral (f: TF; a, b, eps: real): real;
+function integral1 (f: TF; a, b: real; n: Integer): real;
 var
-n, k, t: integer;
+ k, t: integer;
 h, I: real;
 begin
 {для деления метода симпсона}
-
-n := 1000; {зависит от eps2 и четное}
+n :=n;
 h := (b-a)/n;
 I := h*(f(a)+f(b))/3;
-
+ 
 for k := 1 to n-1 do begin
-
+ 
 t:=2;
 if k mod 2 = 1 then t := t+2;
 I := I + h*(t*f(a+k*h))/3;
 end;
-
-
-
-integral := I;
-
+ 
+integral1 := I;
+ 
+end;
+ 
+ 
+function integral (f: TF; a, b, eps: real): real;
+var
+n: integer;
+begin
+{для деления метода симпсона}
+ 
+n := 10;
+ 
+while abs(integral1(f, a, b, n)-integral1(f, a, b, 2*n))> eps  do begin
+n:=2*n;
+end;
+ 
+ 
+ 
+integral := integral1(f, a, b, 2*n);
+ 
 end;
 {main}
 begin
