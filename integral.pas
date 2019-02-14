@@ -80,14 +80,14 @@ root(@f2, @f3, 0.0, 1.0, eps1, x2);
 root(@f1, @f3, -1.0, 0.0, eps1, x3);
 
 {площади}
-I1 := integral(@f1, x3, x1, eps2);
-I2 := integral(@f2, x2, x1, eps2);
-I3 := integral(@f3, x3, x2, eps2);
+I1 := integral(@f1, x1+x3-maxi(x1, x3), maxi(x1, x3), eps2);
+I2 := integral(@f2, x2+x1-maxi(x2, x1), maxi(x2, x1), eps2);
+I3 := integral(@f3, x3+x2-maxi(x3,x2), maxi(x2, x3), eps2);
 
 
 {подсчет и вывод результатов}
 
-answer := I1 - I2 - I3;
+answer := abs(I1) - abs(I2) - abs(I3);
 
 writeln('Площадь =   ', abs(answer):4:5);
 writeln('Точки пересечения : ');
