@@ -60,7 +60,7 @@ writeln(I);
 
 integral := I;
 
-
+end;
 {main}
 begin
 
