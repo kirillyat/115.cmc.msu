@@ -3,11 +3,11 @@ program genetic;
 const N = 10;
 
 type
-mas = array [1..n] of word;
+mas = array [1..n] of byte;
 arr = array [1..n] of real;
 
 var
-    t: text;
+   
     pop: mas; {Population}
     a: arr; {Chances to mix}
     iter, bestRoot, count, num1, num2, exitNumber, i, number, mode, output, leave: word;
@@ -24,7 +24,7 @@ begin
 end;
 
 
-function rand (var S : integer): integer;
+function rand (var S : byte): byte;
 begin
     randomize;
     rand := random(0, S);
@@ -58,3 +58,13 @@ begin
     end;
 end;
 
+
+
+
+
+
+
+{TODO: тело програмы}
+begin
+
+end.
