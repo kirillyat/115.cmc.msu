@@ -1,0 +1,18 @@
+.data
+        A1 DB 100
+        A2 DB 20
+        X1 DW 1000
+        X2 DW 7301
+        V1 DD 345
+        V2 DD 206
+        D1 DQ 123456h
+        D2 DQ 789ABCh
+
+.code
+        mov A1, A2 ;а
+        mov X1, X2 ;б
+        mov V1, V2 ;в
+        mov D1, D2 ;г
+        xchg A1, A2;д
+        xchg V1, V2;е
+        xchg D1, D2;ж
