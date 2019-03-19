@@ -20,6 +20,15 @@ Again:
       div A
       cmp AH, 0
       jz tri
+      
+      
+      mov eax, edx
+      div B
+      cmp AH, 0
+      jz five
+      
+      outint edx 
+      
   retur3:
   
       mov eax, edx
@@ -27,7 +36,9 @@ Again:
       cmp AH, 0
       jz five
   retur5:
-      
+  
+      outstrln '' ;перевод строки
+  
       cmp edx, ecx
       jz ending
       inc edx 
