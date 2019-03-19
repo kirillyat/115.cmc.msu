@@ -1,0 +1,54 @@
+
+.data
+
+        err db 'err',0
+        A db 3d
+        B db 5d
+
+.code
+
+Start:  
+
+       inint(ecx)
+       mov eax, ecx
+       mov ebx, ecx
+       mov edx, 1 
+        
+      again:
+      outintln edx 
+      mov eax, edx
+      div A
+      cmp AH, 0
+      jz tri;
+      retur1:
+      mov eax, edx
+      
+      div B
+      cmp AH, 0
+      jz five;  
+       retur:
+      
+      cmp edx, ecx
+      jz ending
+      inc edx ;
+      jmp again ; loop
+       
+       ending:
+       
+       
+       
+       
+ exit 
+ 
+ 
+ tri: 
+ outstrln 'fizz'
+ 
+ jmp retur1
+    
+ five:
+outstrln 'buzz'
+ jmp retur
+ 
+ 
+ end Start
