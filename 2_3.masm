@@ -9,10 +9,10 @@
         D2 DQ 789ABCh
 
 .code
-        mov A1, A2 ;а
-        mov X1, X2 ;б
-        mov V1, V2 ;в
-        mov D1, D2 ;г
-        xchg A1, A2;д
-        xchg V1, V2;е
-        xchg D1, D2;ж
+        mov eax, 0 ;а
+        mov ah, A1 ;
+        mov A1, eh ;
+        
+        xchg V1, ah;e
+        xchg V2, ah;
+        xchg V1, ah;
