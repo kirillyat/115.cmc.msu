@@ -15,12 +15,10 @@ Start:
        mov edx, 1 
         
 Again:
-      outintln edx 
       mov eax, edx
       div A
       cmp AH, 0
       jz tri
-      
       
       mov eax, edx
       div B
@@ -35,16 +33,18 @@ Again:
       div B
       cmp AH, 0
       jz five
+      
   retur5:
   
       outstrln '' ;перевод строки
   
       cmp edx, ecx
-      jz ending
+      jz finish
       inc edx 
       jmp Again ;loop
        
-  ending:
+  finish:
+  
  exit 
  
  tri: 
