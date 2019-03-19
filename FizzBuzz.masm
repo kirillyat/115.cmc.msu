@@ -14,41 +14,35 @@ Start:
        mov ebx, ecx
        mov edx, 1 
         
-      again:
+Again:
       outintln edx 
       mov eax, edx
       div A
       cmp AH, 0
-      jz tri;
-      retur1:
+      jz tri
+  retur3:
+  
       mov eax, edx
-      
       div B
       cmp AH, 0
-      jz five;  
-       retur:
+      jz five
+  retur5:
       
       cmp edx, ecx
       jz ending
-      inc edx ;
-      jmp again ; loop
+      inc edx 
+      jmp Again ;loop
        
-       ending:
-       
-       
-       
-       
+  ending:
  exit 
  
- 
  tri: 
- outstrln 'fizz'
- 
- jmp retur1
+     outstr 'fizz'
+     jmp retur3
     
  five:
-outstrln 'buzz'
- jmp retur
+     оutstr 'buzz'
+     jmp retur5
  
  
  end Start
