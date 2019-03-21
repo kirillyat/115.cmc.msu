@@ -1,0 +1,88 @@
+
+include console.inc
+
+.data
+
+        A dW 10d
+        P dB ' '
+        Z dB '0'
+      Rez dD 0
+     prev db '+'
+        
+        
+
+.code
+
+innum:  
+      MOV EAX, 0
+  retur:
+      MOV EBX, 0
+      inchar BL
+      
+     
+      cmp BL, '0'
+          jz step
+      cmp BL, '1'
+          jz step
+      cmp BL, '2'
+          jz step
+      cmp BL, '3'
+          jz step
+      cmp BL, '4'
+          jz step
+      cmp BL, '5'
+          jz step
+      cmp BL, '6'
+          jz step
+      cmp BL, '7'
+          jz step
+      cmp BL, '8'
+          jz step
+      cmp BL, '9'
+          jz step
+      RET        
+   
+Start:
+onemore:
+    CALL innum
+    cmp prev, '+'
+        jz plus
+   
+    cmp prev, '-'
+        jz minus
+    
+    cmp prev, '/'
+        jz plus
+    
+    cmp prev, '*'
+       jz plus
+    
+    one:
+    cmp BL, '='
+       jz final
+    mov prev, BL
+    jmp onemore
+    
+    final:
+    
+    outintln Rez
+    outint BL
+  
+      
+       
+ exit 
+ step:
+     MUL A
+     SUB BL, Z
+     ADD EAX, EBX
+     jmp retur
+     
+plus:
+   ADD Rez,EAX
+  jmp one
+
+minus:
+   sub Rez,EAX
+   jmp one
+
+ end Start
