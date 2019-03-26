@@ -41,7 +41,7 @@ RET
 Start:
     onemore:
 
-        CALL innum ;Р·Р°РїРёСЃС‹РІР°РµС‚ РЅРѕРІРѕРµ С‡РёСЃР»Рѕ РІ edx
+        CALL innum ;записывает новое число в edx
 
         cmp prev, '+'
             jz plus
@@ -53,49 +53,52 @@ Start:
             jz devid
         
         cmp prev, '*'
-            jz multy
+            jz mylty
         
-        one:
+    conty:
 
         cmp BL, '='
            jz final
-
+    
         mov prev, BL
 
     jmp onemore
         
     
     final:
-        outintln Rez
+        outintln rez
 
 exit 
 
 
 step:
     MUL ten
-    SUB BL, zero
+    SUB BL, '0'
     ADD EAX, EBX
 jmp retur
      
 
 plus:
-    ADD Rez, EAX
+    ADD rez, EAX
 jmp conty
 
 minus:
-   sub Rez, EAX
+   sub rez, EAX
 jmp conty
 
+
 devid:
-   xchg EAX, Rez
-   Div Rez
-   xchg EAX, Rez
+mov edx, 0
+   xchg EAX, rez
+   Div rez
+   xchg EAX, rez
 jmp conty
 
 mylty:
-   xchg EAX, Rez
-   MUL Rez
-   xchg EAX, Rez
+mov edx, 0
+   xchg EAX, rez
+   MUL rez
+   xchg EAX, rez
 jmp conty
 
 
