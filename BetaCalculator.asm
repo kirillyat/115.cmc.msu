@@ -23,22 +23,19 @@ include console.inc
 
 
 			devid:
-			mov edx, 0
+			   mov edx, 0
 			   xchg EAX, ECX
 			   DIV ECX
 			   xchg EAX, ECX
 			jmp conty
 
 			mylty:
-			mov edx, 0
+		       mov edx, 0
 			   xchg EAX, ECX
 			   MUL ECX
 			   xchg EAX, ECX
 			jmp conty
-
-
-
-		 
+			
 			step:
 				    MUL ten
 				    SUB BL, '0'
@@ -77,12 +74,10 @@ include console.inc
 			        jmp final
 
 			    retur:
-
 			    	inchar BL
 			    	jmp onemore
-
-			    final:
-
+					
+				final:	
 			RET        
 			   
 
