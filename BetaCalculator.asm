@@ -14,26 +14,26 @@ include console.inc
 
 
 			plus:
-			    ADD ECX, EAX
+				ADD ECX, EAX
 			jmp conty
 
 			minus:
-			   sub ECX, EAX
+				sub ECX, EAX
 			jmp conty
 
 
 			devid:
-			   mov edx, 0
-			   xchg EAX, ECX
-			   DIV ECX
-			   xchg EAX, ECX
+				mov edx, 0
+				xchg EAX, ECX
+			    DIV ECX
+			    xchg EAX, ECX
 			jmp conty
 
 			mylty:
-		       mov edx, 0
-			   xchg EAX, ECX
-			   MUL ECX
-			   xchg EAX, ECX
+		       	mov edx, 0
+			   	xchg EAX, ECX
+			   	MUL ECX
+			   	xchg EAX, ECX
 			jmp conty
 			
 			step:
@@ -93,21 +93,20 @@ include console.inc
 
 			again:		
 
-		   		cmp bl, '('
+		   		cmp prev, '('
 		            jz saveANDnext
-		        cmp bl, ')'
+		        cmp prev, ')'
 		            jz close 
 		        cmp prev, '+'
 		            jz plus
-		       
 		        cmp prev, '-'
 		            jz minus
-		        
 		        cmp prev, '/'
 		            jz devid
-		        
 		        cmp prev, '*'
 		            jz multy
+		        cmp prev, '='
+		        	jz crash
 
 		          		conty::
 
@@ -132,18 +131,19 @@ include console.inc
 					            jz num
 					        cmp BL, '9'
 					            jz num  
+
+					    contyn:
+
 							cmp bl, '('
 		         			   	jz saveANDnext
 		       				cmp bl, ')'
 		        			    jz close 
-				inchar BL
-				jmp again
+		        			cmp bl, '='
+		        			    jz crash
 
-		     
-			contyn:
-				MOV prev, BL
-				inchar BL
-			jmp again
+		        		MOV prev, BL
+						inchar BL
+				jmp again
 
 		    close:
 
@@ -172,6 +172,8 @@ include console.inc
 
 Start
 	CALL priority
+
+	crash:
 	outintln ECX
 Exit
 end Start
