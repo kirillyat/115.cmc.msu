@@ -93,13 +93,14 @@ include console.inc
 				MOV EBX, 0
 				MOV EAX, 0
 				MOV prev,'+'
+
 				inchar BL
 
+			again:		
 
-			fromSAFE:		
-		   		cmp prev, '('
+		   		cmp bl, '('
 		            jz saveANDnext
-		        cmp prev, ')'
+		        cmp bl, ')'
 		            jz close ; TODO
 		        cmp prev, '+'
 		            jz plus
@@ -136,12 +137,16 @@ include console.inc
 					            jz num
 					        cmp BL, '9'
 					            jz num  
-
+				inchar BL
+				jmp again
 
 		     
 			contyn:
 
 				MOV prev, BL
+				inchar BL
+			jmp again
+
 
 
 
@@ -161,9 +166,7 @@ include console.inc
 				pop EBX
 				MOV prev, BL
 				pop EAX
-		        
-
-			jmp fromSAFE
+			jmp again
 
 			close:
 				
@@ -177,5 +180,6 @@ include console.inc
 
 Start
 	CALL priority
+	outintln ECX
 Exit
 end Start
