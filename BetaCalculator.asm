@@ -96,7 +96,7 @@ include console.inc
 		   		cmp bl, '('
 		            jz saveANDnext
 		        cmp bl, ')'
-		            jz close ; TODO
+		            jz close 
 		        cmp prev, '+'
 		            jz plus
 		       
@@ -132,19 +132,18 @@ include console.inc
 					            jz num
 					        cmp BL, '9'
 					            jz num  
+							cmp bl, '('
+		         			   	jz saveANDnext
+		       				cmp bl, ')'
+		        			    jz close 
 				inchar BL
 				jmp again
 
 		     
 			contyn:
-
 				MOV prev, BL
 				inchar BL
 			jmp again
-
-
-
-
 
 		    close:
 
