@@ -90,12 +90,13 @@ include console.inc
 	priority PROC 
 		
 				MOV ECX, 0
-				MOV prev,'+'
 				MOV EBX, 0
+				MOV EAX, 0
+				MOV prev,'+'
 				inchar BL
 
 
-
+			fromSAFE:		
 		   		cmp prev, '('
 		            jz saveANDnext
 		        cmp prev, ')'
@@ -112,6 +113,9 @@ include console.inc
 		        cmp prev, '*'
 		            jz multy
 
+		          		conty::
+
+		            					; в  eax  запишем новую цифру
 		    				cmp BL, '0'
 					            jz num
 					        cmp BL, '1'
@@ -135,7 +139,7 @@ include console.inc
 
 
 		     
-			conty::
+			contyn:
 
 				MOV prev, BL
 
@@ -148,27 +152,18 @@ include console.inc
 
 			num:
 				CALL innum
-			jmp conty
+			jmp contyn
 
 			saveANDnext: 
 				push ECX
 				push dword ptr prev
 				CALL priority
 				pop EBX
+				MOV prev, BL
 				pop EAX
-		        cmp BL, '+'
-		            jz plus
-		       
-		        cmp BL, '-'
-		            jz minus
 		        
-		        cmp BL, '/'
-		            jz devid
-		        
-		        cmp BL, '*'
-		            jz multy
 
-			jmp conty
+			jmp fromSAFE
 
 			close:
 				
