@@ -151,7 +151,7 @@ include console.inc
 
 
 
-		    back:
+		    close:
 
 	RAT
 
@@ -168,9 +168,7 @@ include console.inc
 				pop EAX
 			jmp again
 
-			close:
-				
-		    jmp back
+		
 
 	priority ENDP
 
