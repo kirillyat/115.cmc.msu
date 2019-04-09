@@ -60,7 +60,7 @@ priority PROC
     jmp again
 
     close:
-RAT
+RET
 
             
 
