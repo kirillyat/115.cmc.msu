@@ -16,7 +16,7 @@ priority PROC
         MOV ECX, 0
         inchar BL
 
-    again:      
+    again::      
 
         cmp prev, '('
             jz open
@@ -33,7 +33,7 @@ priority PROC
         cmp prev, '='
             jz crash
 
-    conty:                                       
+    conty::                                       
         cmp BL, '0'
             jz num
         cmp BL, '1'
@@ -54,28 +54,23 @@ priority PROC
             jz num
         cmp BL, '9'
             jz num  
-    contyn:
+    contyn::
         MOV prev, BL
         inchar BL
     jmp again
 
     close:
-RET
-
-            
-
-        
-
+        RET
     priority ENDP
 
 
 
 
-START
+START:
  	   CALL priority
 	crash:
    		outintln ECX
-EXIT
+exit
 
 plus:
         ADD ECX, EAX
@@ -92,7 +87,7 @@ devid:
         xchg EAX, ECX
         jmp conty
 
-mylty:
+multy:
         mov edx, 0
         xchg EAX, ECX
         MUL ECX
@@ -143,7 +138,6 @@ num:
 
 open: 
         push ECX
-        mov dword ptr EBX
         push EBX
         CALL priority
         pop EBX
@@ -153,4 +147,4 @@ open:
 
 
 
-end Start
+end START
