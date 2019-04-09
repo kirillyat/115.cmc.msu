@@ -3,9 +3,9 @@ include console.inc
 .data
 
 	ten dW 10d
-    zero dB '0'
-    prev dB '+'
-    rez dD 0
+	zero dB '0'
+   	prev dB '+'
+   	rez dD 0
 
 .code
 
