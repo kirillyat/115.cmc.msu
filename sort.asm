@@ -22,7 +22,7 @@ include console.inc
 
         mov ECX, N
 
-        sotri:
+        sorti:
             push ECX
             mov ECX, N
             sortj:
@@ -53,7 +53,7 @@ START:
 
 
         mov EBX, ESP
-        sub EBX, 4 ; ТК первый элемент будет располагаться по след. адресу
+        ;наверное он не нужен EBX, 4 ; ТК первый элемент будет располагаться по след. адресу
 
 
     ;ВВОДИМ МАССИВ
@@ -64,6 +64,12 @@ START:
     
 
     CALL fun
+
+    ;ВЫВОДИМ МАССИВ
+    mov ECX, N
+    outputArray:    
+        outint [EBX -ECX*4]
+        loop outArray
 
 
 
