@@ -1,78 +1,77 @@
 include console.inc
 
 .data
-    N dD 0
-    index dD ?
-
+    N dD ?
 .code
 
-    PROC fun:
-
-        ;СОГЛАШЕИЕ О СВЯЗЯХ
-        ; EBX - Начало Массива
-        ; N - размер массича
-
-
-        ;АЛОГОРИТМ ПУЗЫРЬКА НА НОРМАЛЬНОМ ЯЗЫКЕ(ПИТОН)
-        ;for i in range(len(massive)-1):
-        ;   for j in range(len(massive)-1-i):
-        ;       if massive[j] > massive[j+1]:
-        ;           massive[j], massive[j+1] = massive[j+1], massive[j]
-
-
-        mov ECX, N
-
-        sorti:
+    sort proc
+        
+        push EBP
+        mov EBP, ESP
+        push EAX
+        push EBX
+        push ECX
+        mov ECX, [EBP+8]    ;SIZE
+        ;END of pushing registers and collecting data
+        
+        ;size in ecx
+        A:
             push ECX
-            mov ECX, N
-            sortj:
-                cmp[EBX-4*ECX], [EBX-4*(ECX-1)]
-                JG swap
+            mov ECX, [EBP+8]
+            dec ECX
+            B:
+                
+                mov EAX, [EBP+8+4*ECX+4]
+                cmp EAX, [EBP+8+4*ECX]
+                JA next
+                xchg EAX, [EBP+8+4*ECX]
+                
                 next:
-                loop sortj
+                mov [EBP+8+4*ECX+4], EAX
+               
+            loop B
             pop ECX
-            loop sorti
+            
+        loop A
+        
+        
+        
+        
+        
+        pop ECX
+        pop EBX
+        pop EAX
+        pop EBP
 
-        RET
-
-        swap:
-            xchg ECX, [EBX-4*ECX]
-            xcng ECX, [EBX-4*(ECX-1)]
-            xchg ECX, [EBX-4*ECX]
-            JMP next
-
-    fun ENDP
+    RET 4 ;delete size from stack
+    
+    sort endp
 
 
 
 START:
 
-    ;РАЗМЕР МАССИВА
-        inint ECX
-        mov N, ECX
-
-
-        mov EBX, ESP
-        ;наверное он не нужен EBX, 4 ; ТК первый элемент будет располагаться по след. адресу
-
-
-    ;ВВОДИМ МАССИВ
-    inputArray:    
-        inint EAX
-        pop EAX
-        loop inputArray
+    inint ECX
+    mov N, ECX
     
-
-    CALL fun
-
-    ;ВЫВОДИМ МАССИВ
+    input:
+        inint EAX
+        push EAX
+    loop input
+    
+    push N ; will be deleted in stack
+    CALL sort
+    
     mov ECX, N
-    outputArray:    
-        outint [EBX -ECX*4]
-        loop outArray
-
+    output:
+        outint [ESP+4*ECX-4]
+        outchar " "
+    loop output
 
 
 EXIT
-
 end START
+
+
+
+
