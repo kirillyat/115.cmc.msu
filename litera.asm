@@ -3,7 +3,6 @@ include console.inc
 ;ВАРИАНТ 5-5-3
 
 .data
-
     text dB 201 DUP(?) ; 200 for 2rule 1 for size
     alphabet dB 28 DUP(0) ; for checkFunc
     
@@ -19,19 +18,15 @@ include console.inc
         mov EBX, 0d
         
         readIn:
-            
-            
             inchar BL
             cmp BL, "."
             JZ fin
             mov text[EDX], BL
             INC EDX
-            
         loop readIn
         
         fin: 
         sub EDX, 1
-
         mov text[0], DL
         
         pop EDX
@@ -47,12 +42,10 @@ include console.inc
         push ECX
         push EDX
         
-        
         mov EBX, 0d
         mov EDX, 1d
-        
-        mov ECX, 0
-        mov cl, text[0]
+        mov ECX, 0d
+        mov CL, text[0]
         
         WriteOut:
             mov BL, text[EDX]
