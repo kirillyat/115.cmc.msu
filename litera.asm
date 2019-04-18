@@ -1,5 +1,7 @@
 include console.inc
 
+;ВАРИАНТ 5-5-3
+
 .data
 
     text dB 201 DUP(?) ; 200 for 2rule 1 for size
