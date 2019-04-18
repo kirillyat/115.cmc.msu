@@ -1,67 +1,15 @@
 include console.inc
-
+ 
 .data
 
-	ten dW 10d
-	zero dB '0'
-   	prev dB '+'
-   	rez dD 0
-
+    ten dD 10
+    prev dD '+'
+    S dD ' '
+    res dD 0
+ 
 .code
+Start:
 
-priority PROC 
-        
-        MOV EAX, 0
-        MOV EBX, 0
-        MOV ECX, 0
-        inchar BL
-
-    again::      
-
-        cmp prev, '('
-            jz open
-        cmp prev, ')'
-            jz close
-        cmp prev, '+'
-            jz plus
-        cmp prev, '-'
-            jz minus
-        cmp prev, '/'
-            jz devid
-        cmp prev, '*'
-            jz multy
-        cmp prev, '='
-            jz crash
-
-    conty::                                       
-        cmp BL, '0'
-            jz num
-        cmp BL, '1'
-            jz num
-        cmp BL, '2'
-            jz num
-        cmp BL, '3'
-            jz num
-        cmp BL, '4'
-            jz num
-        cmp BL, '5'
-            jz num
-        cmp BL, '6'
-            jz num
-        cmp BL, '7'
-            jz num
-        cmp BL, '8'
-            jz num
-        cmp BL, '9'
-            jz num  
-    contyn::
-        MOV prev, BL
-        inchar BL
-    jmp again
-
-    close:
-        RET
-    priority ENDP
 
 
 
