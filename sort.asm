@@ -1,77 +1,72 @@
 include console.inc
 
 .data
-    N dD ?
+
 .code
 
     sort proc
-        
-        push EBP
-        mov EBP, ESP
         push EAX
         push EBX
         push ECX
-        mov ECX, [EBP+8]    ;SIZE
-        ;END of pushing registers and collecting data
+        push EDX
+    
+        ;END of pushing registers
         
-        ;size in ecx
+        ;size in ecx and edx
+        
+         inint EDX
+         mov ECX, EDX
+    
+        input:
+            inint EAX
+            push EAX
+        loop input
+    
+        mov ECX, EDX
+        
         A:
             push ECX
-            mov ECX, [EBP+8]
+            mov ECX, EDX
             dec ECX
             B:
                 
-                mov EAX, [EBP+8+4*ECX+4]
-                cmp EAX, [EBP+8+4*ECX]
+                mov EAX, [ESP+4*ECX+4]
+                cmp EAX, [ESP+4*ECX]
                 JA next
-                xchg EAX, [EBP+8+4*ECX]
+                xchg EAX, [ESP+4*ECX]
                 
-                next:
-                mov [EBP+8+4*ECX+4], EAX
-               
+                
+                mov [ESP+4*ECX+4], EAX
+               next:
             loop B
             pop ECX
             
         loop A
         
         
+         mov ECX, EDX
+         mov EBX, 0
+         output:
+            pop EBX
+            outint EBX
+            outchar " "
+         loop output
         
         
         
+        
+        pop EDX
         pop ECX
         pop EBX
         pop EAX
-        pop EBP
 
-    RET 4 ;delete size from stack
+    RET
     
     sort endp
 
 
 
 START:
-
-    inint ECX
-    mov N, ECX
-    
-    input:
-        inint EAX
-        push EAX
-    loop input
-    
-    push N ; will be deleted in stack
     CALL sort
-    
-    mov ECX, N
-    output:
-        outint [ESP+4*ECX-4]
-        outchar " "
-    loop output
-
-
 EXIT
 end START
-
-
-
-
