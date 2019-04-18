@@ -3,7 +3,6 @@ include console.inc
 .data
 
     text dB 201 DUP(?) ; 200 for 2rule 1 for size
-    a dB 97
     alphabet dB 28 DUP(0) ; for checkFunc
     
 .code
@@ -102,22 +101,45 @@ include console.inc
         push ECX
         push EDX
         
-        mov EBX, 0d
-        mov EDX, 1d
+        mov EBX, 0
+        mov EDX, 0
         mov ECX, 0
         mov CL, text[0]
+        mov DL, text[0]
+        
+       
         
         parsing:
-            mov BL, text[EDX]
+            mov BL, text[ECX]
             cmp BL, 65
-            JB conty
+            JB NO
             cmp BL, 90
-            JA conty
-            ADD text[EDX], 32
-            
-            conty:
-            inc EDX
+            JA MeyBE
+            push EBX
+            inc DL
+            jmp NO
+          MeyBE:
+            cmp BL, 97
+            JB NO
+            cmp BL, 123
+            JA NO
+            push EBX
+            inc DL
+          NO:
+          push EBX
+          
         loop parsing
+        
+        mov ECX, EDX
+        mov text[0], DL
+        mov EDX, 1
+       
+        newmas:
+            pop EBX
+            mov text[edx], BL   
+            inc edx     
+        loop newmas
+        
         
         pop EDX
         pop ECX
