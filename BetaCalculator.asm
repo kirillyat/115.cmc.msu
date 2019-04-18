@@ -15,84 +15,99 @@ Start:
 
 
 START:
- 	   CALL priority
-	crash:
-   		outintln ECX
-exit
+
+  mov EAX, 0
+    Again:  
+        cmp prev,'='
+            jz finish
+           
+        mov EBX, 0
+        inchar BL
+        mov S, EBX
+        sub EBX, '0'
+        cmp EBX, 0 ; IF not a num
+            jl sign;
+        cmp EBX, 9 ;
+            jg sign;
+        mul ten
+        add EAX,EBX
+    jmp Again
+ 
+
+sign:
+        cmp S,'('
+        jz open      
+ 
+        cmp prev,'+'
+        jz plus
+   
+        cmp prev,'-'
+        jz minus
+   
+        cmp prev,'*'
+        jz mult
+   
+        cmp prev,'/'
+        jz divis  
+ 
+        jmp finish
+
 
 plus:
-        ADD ECX, EAX
-        jmp conty
+        add res, EAX
+        mov EAX, 0  
+        mov EBX, S
+        mov prev, EBX
+        cmp S, ')'
+        jz close
+        jmp Again 
 
-minus:
-        sub ECX, EAX
-        jmp conty
+minus:  
+        sub res, EAX
+        mov EAX, 0
+        mov EBX, S
+        mov prev, EBX
+        cmp S, ')'
+        jz close
+        jmp Again
 
-devid:
-        mov edx, 0
-        xchg EAX, ECX
-        DIV ECX
-        xchg EAX, ECX
-        jmp conty
-
-multy:
-        mov edx, 0
-        xchg EAX, ECX
-        MUL ECX
-        xchg EAX, ECX
-        jmp conty
-
-step:
-        MUL ten
-        SUB BL, '0'
-        ADD EAX, EBX
-        MOV EBX, 0
-        inchar BL
-        jmp retur                
-
-
-innum:  
-        MOV EAX, 0
-    onemore:
-        cmp BL, '0'
-            jz step
-        cmp BL, '1'
-            jz step
-        cmp BL, '2'
-            jz step
-        cmp BL, '3'
-            jz step
-        cmp BL, '4'
-            jz step
-        cmp BL, '5'
-            jz step
-        cmp BL, '6'
-            jz step
-        cmp BL, '7'
-            jz step
-        cmp BL, '8'
-            jz step
-        cmp BL, '9'
-            jz step
-        jmp final
-    retur:
-        inchar BL
-        jmp onemore
-    final:  
-        RET
-num:
-        CALL innum
-        jmp contyn
-
-open: 
-        push ECX
-        push EBX
-        CALL priority
-        pop EBX
-        MOV prev, BL
+mult:
+        xchg res, EAX
+        imul res
+        xchg res, EAX
+        mov EAX, 0
+        mov EBX, S
+        mov prev, EBX
+        cmp S, ')'
+            jz close
+            jmp Again
+       
+divis:  
+        xchg res, EAX
+        cdq
+        idiv res
+        xchg res, EAX
+        mov EAX, 0
+ 
+        mov EBX, S
+        mov prev, EBX
+        cmp S, ')'
+        jz close
+        jmp Again
+open:
+        push res
+        mov res,0
+        push prev
+        mov prev,'+'
+        jmp Again
+close:  
+        pop prev
         pop EAX
-        jmp again
-
-
-
-end START
+        xchg res, EAX
+        mov S,'+'
+        jmp sign
+	
+finish:        
+        outint res
+exit
+end Start
