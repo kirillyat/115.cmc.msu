@@ -8,15 +8,11 @@ include console.inc
     res dD 0
  
 .code
+
 Start:
-
-
-
-
-
-START:
-
-  mov EAX, 0
+ 
+        mov EAX, 0
+	
     Again:  
         cmp prev,'='
             jz finish
@@ -25,15 +21,15 @@ START:
         inchar BL
         mov S, EBX
         sub EBX, '0'
-        cmp EBX, 0 ; IF not a num
+        cmp EBX, 0 ; IF not a num then go to sign
             jl sign;
         cmp EBX, 9 ;
             jg sign;
         mul ten
         add EAX,EBX
-    jmp Again
+    	jmp Again
  
-
+       
 sign:
         cmp S,'('
         jz open      
@@ -51,8 +47,7 @@ sign:
         jz divis  
  
         jmp finish
-
-
+	
 plus:
         add res, EAX
         mov EAX, 0  
@@ -61,7 +56,7 @@ plus:
         cmp S, ')'
         jz close
         jmp Again 
-
+	
 minus:  
         sub res, EAX
         mov EAX, 0
@@ -70,7 +65,7 @@ minus:
         cmp S, ')'
         jz close
         jmp Again
-
+         
 mult:
         xchg res, EAX
         imul res
@@ -94,12 +89,14 @@ divis:
         cmp S, ')'
         jz close
         jmp Again
+	
 open:
         push res
         mov res,0
         push prev
         mov prev,'+'
         jmp Again
+	
 close:  
         pop prev
         pop EAX
@@ -109,5 +106,7 @@ close:
 	
 finish:        
         outint res
+	
+	
 exit
 end Start
