@@ -41,10 +41,10 @@ sign:
         jz minus
    
         cmp prev,'*'
-        jz mult
+        jz multy
    
         cmp prev,'/'
-        jz divis  
+        jz divid 
  
         jmp finish
 	
@@ -66,7 +66,7 @@ minus:
         jz close
         jmp Again
          
-mult:
+multy:
         xchg res, EAX
         imul res
         xchg res, EAX
@@ -77,13 +77,12 @@ mult:
             jz close
             jmp Again
        
-divis:  
+divid:  
         xchg res, EAX
         cdq
         idiv res
         xchg res, EAX
         mov EAX, 0
- 
         mov EBX, S
         mov prev, EBX
         cmp S, ')'
@@ -92,7 +91,7 @@ divis:
 	
 open:
         push res
-        mov res,0
+        mov res, 0
         push prev
         mov prev,'+'
         jmp Again
