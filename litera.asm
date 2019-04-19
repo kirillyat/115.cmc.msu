@@ -3,7 +3,7 @@ include console.inc
 ;ВАРИАНТ 5-5-3
 
 .data
-    text dB 201 DUP(?) ; 200 for 2rule 1 for size
+    text dB 201 DUP(?),0 ; 200 for 2rule 1 for size
     alphabet dB 28 DUP(0) ; for checkFunc
     
 .code
