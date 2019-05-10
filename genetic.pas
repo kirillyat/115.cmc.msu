@@ -10,10 +10,10 @@ program genetic;
 
 
 const
-    n = 10;         {Число особей}
+    n = 12;         {Число особей}
     OSTANOV = 4000;  {Проходов до остановы}
     EXACT = 16384;  {Точность}
-    v1 = 0.25;
+    v1 = 0.30;
 
 type
     ArrF = array[1..n] of real;            {Значения функции}
@@ -21,9 +21,8 @@ type
     population = array[1..n] of individ;   {Массив все генов}
 
 var
-    Pop: population;
-    Rez: ArrF;
-    T, Y: integer;
+    pop: population;
+    mx: real;
 
 
 function F(x: real): real;
@@ -35,24 +34,24 @@ end;
 procedure dec2bin(x: real; var a: individ);
 var i: integer;
 begin
-
     case trunc(x) of
-
         1: begin a[1] := 0; a[2] := 1; end;
         2: begin a[1] := 1; a[2] := 0; end;
         3: begin a[1] := 1; a[2] := 1; end;
     end;
     x := x - trunc(x);
-    for i := 3 to 10 do begin
+    for i := 3 to n do begin
         a[i] := trunc(2 * x);
         x := 2 * x - trunc(2 * x);
     end;
 end;
 
+
 function rand(x: real): boolean;
 begin
   if x=0 then rand:=false else rand := random(maxint)/maxint < x;
 end;
+
 
 function pow(a : real; b : integer): real;
 var p : real;
@@ -67,7 +66,6 @@ begin
         end
     else pow := 1/pow(a, -b);
 end;
-
 
 
 function bin2dec(a: individ): real;
@@ -101,20 +99,21 @@ begin
             C[i] := B[i];
             D[i] := C[i];
         end;
-    A:=C;
-    B:=D;
 end;
 
 
 
 {Скрещивание}
-procedure cross(var Pop: population; var rez: ArrF);
-var i: integer;
+procedure cross(var Pop: population);
+    var i, l, s: integer;
+    newpop : population;
 begin
     for i:=1 to (n div 2) do
-        crossbreeding(Pop[2*i], Pop[2*i-1],Pop[2*i+ n div 2], Pop[2*i - 1 + n div 2]);
-
-
+        crossbreeding(pop[random(3)+1], pop[2*i-1], newpop[2*i], newpop[2*i - 1]);
+    for i:=1 to n do
+        if F(bin2dec(pop[i])) < F(bin2dec(newpop[i])) then
+            for l := 1 to n do
+                pop[i][l] := newpop[i][l];
 end;
 
 
@@ -126,33 +125,31 @@ begin
     for i:=1 to n do begin
         randomize;
         k := random(n-1);
-        if rand(v1) then
-        for j:= k to ((n+k) div 2) do begin
-
-            c := pop[i][j];
-            pop[i][j] := pop[i][n + k - j];
-            pop[i][ n + k - j] := c;
-
+        if rand(i/n) then
+          for j:= k to ((n+k) div 2) do begin
+              c := pop[i][j];
+              pop[i][j] := pop[i][n - j + k];
+              pop[i][ n - j + k] := c;
         end;
     end;
 end;
 
 
 
-procedure Selection(var pop: population);
+procedure selection(var pop: population);
 var
-    i: integer;
+    i, j, s, l: integer;
+
 begin
-
-    for i := 1 to n div 2 do begin
-        if f(bin2dec(pop[2*i-1]))<f(bin2dec(pop[2*i])) then
-            pop[2*i-1] := pop[2*i];
-        writeln(f(bin2dec(pop[i])):5:4);
-    end;
-    for i := 1 to 5 do
-        pop[i] := pop[2*i-1];
-
-
+    for i := 1 to n div 2 do
+        for j := i + 1 to n do
+            if F(bin2dec(pop[i])) < F(bin2dec(pop[j])) then begin
+                for l := 1 to n do begin
+                    s := pop[i][l];
+                    pop[i][l] := pop[j][l];
+                    pop[j][l] := s;
+                end;
+            end;
 end;
 
 
@@ -160,11 +157,11 @@ end;
 
 
 procedure INIT(var pop: population);
-    var R : integer;
+    var i : integer;
 begin
     randomize;
-    for R := 1 to n do begin
-        dec2bin(4*random(maxint)/maxint, pop[R]);
+    for i := 1 to n do begin
+        dec2bin(4*random(maxint)/maxint, pop[i]);
     end;
 
 end;
@@ -172,22 +169,25 @@ end;
 
 
 
-procedure Loop (var pop : population; var Rez : ArrF);
-var i, w: integer;
+procedure loop (var pop : population; var mx : real);
+var i, j, w: integer;
 begin
-    for i:=1 to OSTANOV do begin
-    {w:=1;
-    for i := 2 to n do
-        if F(bin2dec(pop[i]))>F(bin2dec(pop[w])) then
-            w:=i;
-    while f(bin2dec(pop[w]))<= 1.605 do begin
-        w:=1;
-        for i := 2 to n do
-          if F(bin2dec(pop[i]))>F(bin2dec(pop[w])) then
-              w:=i;}
+    for i:=1 to 100 do begin {это по количеству итераций болшая погрешность}
         selection(pop);
-        cross(pop, Rez);
+        cross(pop);
         mutation(pop);
+        w:=1;
+        for j:=1 to n do
+          if F(bin2dec(pop[j]))>F(bin2dec(pop[w])) then
+              w:=j;
+
+        if F(bin2dec(pop[w]))>F(mx) then
+            mx := bin2dec(pop[w]);
+
+    end;
+    if F(mx) < 1.6 then begin
+      INIT(pop);
+      loop(pop, mx);
     end;
 end;
 
@@ -200,29 +200,23 @@ end;
 
 
 begin
-    {ответ по WolframAlpfa
-    0.779822;
-    writeln('==========================');
-    writeln('Maximum по WolframAlpfa  :  ');
-    writeln('x = ',ansX:5:5);
-    writeln('y = ',f(ansX):5:5);
-    writeln('==========================');}
 
+    {
+      Ответ
+      x:= 0.779822;
+      y:= 1.605418;
+    }
 
+    randomize;
 
+    INIT(pop);
 
-    INIT(Pop);
+    mx := bin2dec(pop[1]);
 
-
-    Loop(Pop, Rez);
-    T:=1;
-    for Y := 2 to n do
-        if F(bin2dec(pop[Y]))>F(bin2dec(pop[T])) then
-            T:=Y;
-
-    writeln('x=',bin2dec(pop[T]):3:3,' y=',f(bin2dec(pop[T])):3:3);
-
+    loop(pop, mx);
+    writeln('x=', mx:3:6,' y=',F(mx):3:6);
 
 
 
 end.
+
